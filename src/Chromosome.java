@@ -1,13 +1,14 @@
-abstract class Chromosome {
-    private String geneticCode; // Genetic code represented as a string
-    private double fitness; // Fitness value of the chromosome
+public abstract class Chromosome {
+    private String geneticCode;
+    private double fitness;
+    private boolean selectedAsParent;
 
     public Chromosome(String geneticCode) {
         this.geneticCode = geneticCode;
-        this.fitness = 0.0; // Initialize fitness to 0; you can set it as needed.
+        this.fitness = 0.0;
+        this.selectedAsParent = false; // Initialize to false
     }
 
-    // Getter and setter methods for geneticCode
     public String getGeneticCode() {
         return geneticCode;
     }
@@ -16,13 +17,20 @@ abstract class Chromosome {
         this.geneticCode = geneticCode;
     }
 
-    // Getter and setter methods for fitness
     public double getFitness() {
         return fitness;
     }
 
     public void setFitness(double fitness) {
         this.fitness = fitness;
+    }
+
+    public boolean isSelectedAsParent() {
+        return selectedAsParent;
+    }
+
+    public void setSelectedAsParent(boolean selectedAsParent) {
+        this.selectedAsParent = selectedAsParent;
     }
 
     // You can add common methods for manipulating genetic code and fitness here
