@@ -15,5 +15,9 @@ public class Population {
         this.chromosomes = chromosomes;
     }
 
+    public Chromosome getBestChromosome() {
+        return null;
+    }
+
     // You can add other methods related to population management here
 }
