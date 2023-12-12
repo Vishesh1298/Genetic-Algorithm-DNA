@@ -1,3 +1,6 @@
+package Strategy;
+import GA.Population;
+
 public class SwapMutation implements MutationStrategy {
     @Override
     public void applyMutation(Population population) {

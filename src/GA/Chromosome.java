@@ -1,3 +1,4 @@
+package GA;
 public abstract class Chromosome {
     private String geneticCode;
     private double fitness;
@@ -32,7 +33,4 @@ public abstract class Chromosome {
     public void setSelectedAsParent(boolean selectedAsParent) {
         this.selectedAsParent = selectedAsParent;
     }
-
-    // You can add common methods for manipulating genetic code and fitness here
-    // For example, methods to compute fitness, mutate, or crossover genetic code.
 }

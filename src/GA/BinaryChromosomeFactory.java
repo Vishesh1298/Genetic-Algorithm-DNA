@@ -1,4 +1,6 @@
-public class BinaryChromosomeFactory extends ChromosomeFactory {
+package GA;
+
+public class BinaryChromosomeFactory implements ChromosomeFactory {
     private static BinaryChromosomeFactory instance;
 
     private BinaryChromosomeFactory() {
@@ -12,7 +14,7 @@ public class BinaryChromosomeFactory extends ChromosomeFactory {
     }
 
     @Override
-    public Chromosome createChromosome() {
-        return new BinaryChromosome();
+    public Chromosome createChromosome(String geneticCode) {
+        return new BinaryChromosome(geneticCode);
     }
 }

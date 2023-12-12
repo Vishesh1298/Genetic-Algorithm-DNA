@@ -1,4 +1,8 @@
+package Strategy;
 import java.util.Random;
+
+import GA.Chromosome;
+import GA.Population;
 
 public class RouletteWheelSelection implements SelectionStrategy {
     private static final double EPSILON = 1e-10; // Small value to avoid division by zero

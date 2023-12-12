@@ -1,3 +1,4 @@
+package GA;
 import java.util.Random;
 
 class BinaryChromosome extends Chromosome {
@@ -5,6 +6,11 @@ class BinaryChromosome extends Chromosome {
 
     public BinaryChromosome() {
         super(generateRandomBinaryCode(GENETIC_CODE_LENGTH));
+    }
+
+    // Add a constructor that takes a binary genetic code
+    public BinaryChromosome(String geneticCode) {
+        super(geneticCode);
     }
 
     // Generate a random binary code of the specified length
@@ -19,7 +25,4 @@ class BinaryChromosome extends Chromosome {
 
         return binaryCode.toString();
     }
-
-    // You can add specific methods for BinaryChromosome here
-    // For example, methods to manipulate and evaluate binary data.
 }

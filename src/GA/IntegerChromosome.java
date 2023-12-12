@@ -1,3 +1,4 @@
+package GA;
 import java.util.Random;
 
 class IntegerChromosome extends Chromosome {
@@ -7,12 +8,13 @@ class IntegerChromosome extends Chromosome {
         super(Integer.toString(generateRandomIntegerCode(GENETIC_CODE_LENGTH)));
     }
 
+    public IntegerChromosome(String geneticCode) {
+        super(geneticCode);
+    }
+
     // Generate a random integer code of the specified length
     private static int generateRandomIntegerCode(int length) {
         Random random = new Random();
         return random.nextInt((int) Math.pow(2, length));
     }
-
-    // You can add specific methods for IntegerChromosome here
-    // For example, methods to manipulate and evaluate integer data.
 }

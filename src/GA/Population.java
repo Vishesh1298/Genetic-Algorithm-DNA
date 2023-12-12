@@ -1,6 +1,8 @@
+package GA;
 import java.util.List;
 
 public class Population {
+
     private List<Chromosome> chromosomes;
 
     public Population(List<Chromosome> chromosomes) {

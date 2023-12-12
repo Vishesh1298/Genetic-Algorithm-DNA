@@ -1,3 +1,6 @@
+package Strategy;
+import GA.Population;
+
 public class TournamentSelection implements SelectionStrategy {
     @Override
     public void applySelection(Population population) {

@@ -1,10 +1,59 @@
 import java.util.List;
 
+import GA.Chromosome;
+import GA.Operator;
+import GA.Population;
+import GA.PopulationFactory;
+import Strategy.BitFlipMutation;
+import Strategy.CrossoverStrategy;
+import Strategy.MutationStrategy;
+import Strategy.RouletteWheelSelection;
+import Strategy.SelectionStrategy;
+import Strategy.SinglePointCrossover;
+
 public class GeneticAlgorithm implements Operator {
+    private SelectionStrategy selectionStrategy; // Setting Different Selection Stratergies
+    private CrossoverStrategy crossoverStrategy;
+    private MutationStrategy mutationStrategy;
+
+    public GeneticAlgorithm() {
+        // Initialize with default strategies, you can replace these with your custom strategies
+        this.selectionStrategy = new RouletteWheelSelection();
+        this.crossoverStrategy = new SinglePointCrossover(null);
+        this.mutationStrategy = new BitFlipMutation();
+    }
+
+    @Override
+    public void applySelection(Population population) {
+        selectionStrategy.applySelection(population);
+    }
+
+    @Override
+    public void applyCrossover(Population population) {
+        crossoverStrategy.applyCrossover(population);
+    }
+
+    @Override
+    public void applyMutation(Population population) {
+        mutationStrategy.applyMutation(population);
+    }
+
+    public void setSelectionStrategy(SelectionStrategy strategy) {
+        this.selectionStrategy = strategy;
+    }
+
+    public void setCrossoverStrategy(CrossoverStrategy strategy) {
+        this.crossoverStrategy = strategy;
+    }
+
+    public void setMutationStrategy(MutationStrategy strategy) {
+        this.mutationStrategy = strategy;
+    }
+
     public static void main(String[] args) {
         GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm(); // Create an instance
         int populationSize = 10; // Specify the desired population size
-        String chromosomeType = "binary"; // Specify the desired chromosome type (binary or integer)
+        String chromosomeType = "binary";  // Specify the desired chromosome type (binary or integer) 
 
         // Create a population of binary chromosomes
         PopulationFactory populationFactory = PopulationFactory.getInstance();
@@ -16,70 +65,18 @@ public class GeneticAlgorithm implements Operator {
         // Print each chromosome
         for (int i = 0; i < chromosomes.size(); i++) {
             Chromosome chromosome = chromosomes.get(i);
-            System.out.println("Chromosome " + (i + 1) + ": " + chromosome.getGeneticCode());
+            System.out.println("Chromosome " + (i + 1) + ": " + chromosome.getGeneticCode() + "Fitness :");
         }
 
-        // Apply default strategies or set custom ones
-        geneticAlgorithm.applyMutation(population);
+        // Apply strategies
+        System.out.println("Applying Selection");
+        geneticAlgorithm.applySelection(population);
+
+        System.out.println("Applying Crossover");
         geneticAlgorithm.applyCrossover(population);
+
+        System.out.println("Applying Mutation");
         geneticAlgorithm.applyMutation(population);
-
-        // Further steps in your genetic algorithm...
     }
 
-    public void applyCrossover(Population population) {
-        // Implement crossover logic here
-    }
-
-    @Override
-    public SelectionStrategy getDefaultSelectionStrategy() {
-        return new RouletteWheelSelection(); // or any other default strategy
-    }
-
-    @Override
-    public CrossoverStrategy getDefaultCrossoverStrategy() {
-        return new SinglePointCrossover(); // or any other default strategy
-    }
-
-    @Override
-    public MutationStrategy getDefaultMutationStrategy() {
-        return new BitFlipMutation(); // or any other default strategy
-    }
-
-    // Implement other methods from the Operator interface...
-    
-    @Override
-    public void initializePopulation(Population population) {
-        // Implementation for initializing population
-    }
-
-    @Override
-    public void evaluateFitness(Population population) {
-        // Implementation for evaluating fitness
-    }
-
-    @Override
-    public void calculateFitness(Chromosome chromosome) {
-        // Implementation for calculating fitness
-    }
-
-    @Override
-    public void getBestChromosome(Population population) {
-        // Implementation for getting the best chromosome
-    }
-
-    @Override
-    public void setSelectionStrategy(SelectionStrategy strategy) {
-        // Implementation for setting selection strategy
-    }
-
-    @Override
-    public void setCrossoverStrategy(CrossoverStrategy strategy) {
-        // Implementation for setting crossover strategy
-    }
-
-    @Override
-    public void setMutationStrategy(MutationStrategy strategy) {
-        // Implementation for setting mutation strategy
-    }
 }
