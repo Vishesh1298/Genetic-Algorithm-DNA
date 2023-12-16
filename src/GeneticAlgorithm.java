@@ -1,82 +1,97 @@
 import java.util.List;
 
-import GA.Chromosome;
-import GA.Operator;
-import GA.Population;
-import GA.PopulationFactory;
-import Strategy.BitFlipMutation;
-import Strategy.CrossoverStrategy;
-import Strategy.MutationStrategy;
-import Strategy.RouletteWheelSelection;
-import Strategy.SelectionStrategy;
-import Strategy.SinglePointCrossover;
+import Chromosome.Chromosome;
+import Chromosome.ChromosomeType;
+import Population.Population;
+import Population.PopulationFactory;
+import Strategies.Strategy;
+import Strategies.StrategyType1;
 
-public class GeneticAlgorithm implements Operator {
-    private SelectionStrategy selectionStrategy; // Setting Different Selection Stratergies
-    private CrossoverStrategy crossoverStrategy;
-    private MutationStrategy mutationStrategy;
-
-    public GeneticAlgorithm() {
-        // Initialize with default strategies, you can replace these with your custom strategies
-        this.selectionStrategy = new RouletteWheelSelection();
-        this.crossoverStrategy = new SinglePointCrossover(null);
-        this.mutationStrategy = new BitFlipMutation();
-    }
-
-    @Override
-    public void applySelection(Population population) {
-        selectionStrategy.applySelection(population);
-    }
-
-    @Override
-    public void applyCrossover(Population population) {
-        crossoverStrategy.applyCrossover(population);
-    }
-
-    @Override
-    public void applyMutation(Population population) {
-        mutationStrategy.applyMutation(population);
-    }
-
-    public void setSelectionStrategy(SelectionStrategy strategy) {
-        this.selectionStrategy = strategy;
-    }
-
-    public void setCrossoverStrategy(CrossoverStrategy strategy) {
-        this.crossoverStrategy = strategy;
-    }
-
-    public void setMutationStrategy(MutationStrategy strategy) {
-        this.mutationStrategy = strategy;
-    }
+public class GeneticAlgorithm {
 
     public static void main(String[] args) {
-        GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm(); // Create an instance
-        int populationSize = 10; // Specify the desired population size
-        String chromosomeType = "binary";  // Specify the desired chromosome type (binary or integer) 
+        // Assuming there are predefined default values for these parameters
+        int defaultPopulationSize = 10;
+        ChromosomeType defaultChromosomeType = ChromosomeType.BINARY; // or ChromosomeType.INTEGER
+        int defaultGenerations = 5;
+        double defaultMaxFitness = 16.0;
+      Strategy strategy = new StrategyType1(); // set default strategy
+      Chromosome bestChromosome = null;
 
-        // Create a population of binary chromosomes
+        System.out.println("Genetic Algorithm Setup Details:");
+        System.out.println("Population Size: " + defaultPopulationSize);
+        System.out.println("Chromosome Type: " + defaultChromosomeType);
+        System.out.println("Max Generations: " + defaultGenerations);
+        System.out.println("Max Fitness: " + defaultMaxFitness);
+        System.out.println();
+      
+        // Create Population
         PopulationFactory populationFactory = PopulationFactory.getInstance();
-        Population population = populationFactory.createPopulation(populationSize, chromosomeType);
+        Population population = populationFactory.initializePopulation(defaultPopulationSize, defaultChromosomeType);
 
-        // Get the chromosomes from the population
-        List<Chromosome> chromosomes = population.getChromosomes();
+      population.evaluateFitness(); // Evaluates fitness for all chromosomes in the population
+      System.out.println("List of Initial Population as below:");
+      // print all chromosome from population
+      population.printAllChromosomes();
+      System.out.println();
+      
+  
 
-        // Print each chromosome
-        for (int i = 0; i < chromosomes.size(); i++) {
-            Chromosome chromosome = chromosomes.get(i);
-            System.out.println("Chromosome " + (i + 1) + ": " + chromosome.getGeneticCode() + "Fitness :");
+      String strategyType = strategy instanceof StrategyType1 ? 
+        "StrategyType1 (TournamentSelection, SinglePointCrossover, " :
+        "StrategyType2 (RouletteWheelSelection, TwoPointCrossover, ";
+      if (defaultChromosomeType == ChromosomeType.BINARY) {
+        System.out.println(strategyType + "BitFlipMutation)");
+      }
+      else if (defaultChromosomeType == ChromosomeType.INTEGER) {
+        System.out.println(strategyType + "RandomValueMutation)");
+      }
+      else {
+          throw new IllegalArgumentException("Unsupported Chromosome Type");
+      }
+      
+      System.out.println();
+
+        // Main loop
+        for (int generation = 0; generation < defaultGenerations; generation++) {
+
+          System.out.println("Generation " + generation);
+          
+            // Selection
+            List<Chromosome> selectedParents = strategy.selection(population);
+          for (Chromosome parent : selectedParents) {
+              System.out.println("Parent - Genetic Code: " + parent.getGeneticCode() + ", Fitness: " + parent.getFitness());
+          }
+
+            // Crossover
+            Chromosome child = strategy.crossover(selectedParents);
+          System.out.println("Child: " + child.getGeneticCode() + ", Fitness: " + child.getFitness());;
+
+            // Mutation
+            strategy.mutation(child);
+          System.out.println("Mutated Child: " + child.getGeneticCode() + ", Fitness: " + child.getFitness());
+
+            // Add child to the population and evaluate fitness
+            population.addChromosome(child);
+            population.evaluateFitness(); // Assuming this method evaluates fitness for the entire population
+
+            // Check for the best chromosome
+            bestChromosome = population.getBestChromosome();
+          System.out.println("Best Chromosome so far: " + bestChromosome.getGeneticCode() + " - Fitness: " + bestChromosome.getFitness());
+          System.out.println();
+          
+          if (bestChromosome.getFitness() >= defaultMaxFitness) {
+              System.out.println("Optimal Chromosome found in generation " + generation);
+              break;
+          }
         }
-
-        // Apply strategies
-        System.out.println("Applying Selection");
-        geneticAlgorithm.applySelection(population);
-
-        System.out.println("Applying Crossover");
-        geneticAlgorithm.applyCrossover(population);
-
-        System.out.println("Applying Mutation");
-        geneticAlgorithm.applyMutation(population);
+      System.out.println();
+      System.out.println("Final Result: ");
+      // Report the best Chromosome after the loop
+      if (bestChromosome != null) {
+          System.out.println("Best Chromosome after " + defaultGenerations + " generations: " + bestChromosome.getGeneticCode() + " - Fitness: " + bestChromosome.getFitness());
+      } else {
+          System.out.println("No optimal Chromosome found after " + defaultGenerations + " generations.");
+      }
     }
-
 }
