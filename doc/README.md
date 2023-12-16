@@ -1,39 +1,9 @@
-# CS613 Group CA - Genetic Algorithm
-- TeamMember 1: Charan Reddy 25% effort
-- TeamMember 2: Chi Ieong Ng (22252446) 25% effort
-- TeamMember 3: Rohan Shanavas 25% effort
-- TeamMember 4: Vishesh Kapoor (22250685) 25% effort
+## Compile and Run: 
+To compile the code:
+- javac -d bin src\*.java src\Chromosome\*.java src\Crossovers\*.java src\Mutations\*.java src\Population\*.java src\Selection\*.java src\Strategies\*.java
 
-
-
-## File Structure:
-root/\
-└── src/\
-| ├── BinaryChromosome.java\
-| ├── BinaryChromosomeFactory.java\
-| ├── BitFlipMutation.java\
-| ├── Chromosome.java\
-| ├── ChromosomeFactory.java\
-| ├── ChromosomeFactory.java\
-| ├── ChromosomeType.java\
-| ├── GeneticAlgorithm.java\
-| ├── IntegerChromosome.java\
-| ├── IntegerChromosomeFactory.java\
-| ├── Operator.java\
-| ├── Population.java\
-| ├── PopulationFactory.java\
-| ├── RandomValueMutation.java\
-| ├── RouletteWheelSelection.java\
-| ├── SinglePointCrossover.java\
-| ├── Strategy.java\
-| ├── StrategyType1.java\
-| ├── StrategyType2.java\
-| ├── TournamentSelection.java\
-| └── TwoPointCrossover.java\
-└── bin/\
-└── doc/\
-└── README.txt\
-└── README.md\
+To run the code:
+- java -cp bin GeneticAlgorithm
 
 ## File Description
 - `BinaryChromosomeFactory.java`: A factory class for creating instances of BinaryChromosome. It follows the Singleton pattern, ensuring only one instance of the factory exists.
@@ -76,11 +46,6 @@ root/\
 
 - `StrategyType2.java`: Another implementation of Strategy, using roulette wheel selection, two-point crossover, and combined mutations. 
 
-## Compile and Run: 
-To compile the code:
-- javac -d bin src/*.java
-To run the code:
-- java -cp bin GeneticAlgorithm
 
 ## Output Explanation
 ScreenShot:

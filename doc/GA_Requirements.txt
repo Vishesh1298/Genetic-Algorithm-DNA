@@ -1,3 +1,0 @@
-Take input of chromosome type ??? Binary or Integer
-Print Fitness 
-Setting Different Selection Stratergies
