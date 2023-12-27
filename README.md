@@ -47,10 +47,6 @@ To run the code:
 - `StrategyType2.java`: Another implementation of Strategy, using roulette wheel selection, two-point crossover, and combined mutations. 
 
 
-## Output Explanation
-ScreenShot:
-![](output.jpg)
-
 Explanation:
 - **Initial Setup:** The output details the genetic algorithm's initial configuration, including population size (10), chromosome type (BINARY), maximum generations (5), and a target for maximum fitness (16.0). The goal is to evolve the population until the best chromosome reaches the maximum fitness or the maximum number of generations is reached.
 - **Population Initialization:** Displays the initial population, listing the genetic code and fitness of each chromosome. This is crucial for observing how the population evolves over time.
